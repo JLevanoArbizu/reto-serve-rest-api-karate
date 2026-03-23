@@ -1,31 +1,17 @@
 # Reto de Automatización QA - BackEnd (ServeRest API)
 
+![Java](https://img.shields.io/badge/Java-17-ED8B00?style=for-the-badge&logo=openjdk&logoColor=white)
+![Maven](https://img.shields.io/badge/Maven-3.6.0-C71A36?style=for-the-badge&logo=apachemaven&logoColor=white)
+![Karate DSL](https://img.shields.io/badge/Karate_DSL-1.4.1-000000?style=for-the-badge)
+![JUnit 5](https://img.shields.io/badge/JUnit-5-25A162?style=for-the-badge&logo=junit5&logoColor=white)
+
 Este repositorio contiene la suite de pruebas automatizadas para la API de Usuarios de [ServeRest](https://serverest.dev/), desarrollada en Java utilizando **Karate DSL**.
 
 **Historia de Usuario base:** Como administrador del sistema, quiero poder gestionar los usuarios a través de la API para administrar la base de datos de usuarios.
 
 ---
 
-## Cumplimiento de Especificaciones Técnicas
-
-El proyecto ha sido diseñado para cumplir estrictamente con los 8 puntos solicitados en el reto:
-
-1. **Configuración (Karate DSL):** Proyecto gestionado con Maven (`pom.xml`) utilizando el framework Karate.
-2. **Feature Files:** Centralizado en `src/test/java/features/usuarios.feature` para cubrir los endpoints de usuarios.
-3. **Operaciones CRUD Completas:** * `GET /usuarios`: Implementado para listar y validar todos los usuarios.
-    * `POST /usuarios`: Implementado con generación de datos dinámicos.
-    * `GET /usuarios/{_id}`: Búsqueda dinámica utilizando el ID generado en el POST.
-    * `PUT /usuarios/{_id}`: Actualización del registro previamente creado.
-    * `DELETE /usuarios/{_id}`: Eliminación del registro para garantizar la limpieza de la base de datos.
-4. **Validación de Esquema JSON:** Se implementó `usuario-schema.json` en la carpeta `schemas/` para validar estrictamente la estructura y tipos de datos (ej. uso de Regex para emails).
-5. **Casos Positivos y Negativos:** Además del flujo ideal (CRUD), se automatizó un escenario negativo para validar la respuesta HTTP 400 al intentar registrar un email duplicado.
-6. **Helpers y Datos de Prueba:** Se desarrolló la utilidad `utils.js` en la carpeta `helpers/` para generar correos electrónicos únicos (`getRandomEmail`), evitando fallos por colisión de datos.
-7. **Instrucciones de Ejecución:** Detalladas en la sección inferior.
-8. **Repositorio:** Código versionado y subido a GitHub (este repositorio).
-
----
-
-## ⚙️ Instrucciones para ejecutar los Tests
+##  Instrucciones para ejecutar los Tests
 
 Para correr esta suite de automatización en tu entorno local, sigue estos pasos:
 
@@ -61,8 +47,29 @@ mvn test -Dkarate.options="classpath:features/usuarios.feature"
 
 ---
 
-## 📊 Visualización de Reportes
+##  Visualización de Reportes
 
 Karate genera automáticamente un reporte HTML detallado de las pruebas. Al finalizar la ejecución de los comandos, puedes analizar los resultados, el Response Body y los Request Headers abriendo la siguiente ruta en tu navegador web:
 
 **`target/karate-reports/karate-summary.html`**
+
+--- 
+
+## Cumplimiento de Especificaciones Técnicas
+
+El proyecto ha sido diseñado para cumplir estrictamente con los 8 puntos solicitados en el reto:
+
+1. **Configuración (Karate DSL):** Proyecto gestionado con Maven (`pom.xml`) utilizando el framework Karate.
+2. **Feature Files:** Centralizado en `src/test/java/features/usuarios.feature` para cubrir los endpoints de usuarios.
+3. **Operaciones CRUD Completas:** * `GET /usuarios`: Implementado para listar y validar todos los usuarios.
+    * `POST /usuarios`: Implementado con generación de datos dinámicos.
+    * `GET /usuarios/{_id}`: Búsqueda dinámica utilizando el ID generado en el POST.
+    * `PUT /usuarios/{_id}`: Actualización del registro previamente creado.
+    * `DELETE /usuarios/{_id}`: Eliminación del registro para garantizar la limpieza de la base de datos.
+4. **Validación de Esquema JSON:** Se implementó `usuario-schema.json` en la carpeta `schemas/` para validar estrictamente la estructura y tipos de datos (ej. uso de Regex para emails).
+5. **Casos Positivos y Negativos:** Además del flujo ideal (CRUD), se automatizó un escenario negativo para validar la respuesta HTTP 400 al intentar registrar un email duplicado.
+6. **Helpers y Datos de Prueba:** Se desarrolló la utilidad `utils.js` en la carpeta `helpers/` para generar correos electrónicos únicos (`getRandomEmail`), evitando fallos por colisión de datos.
+7. **Instrucciones de Ejecución:** Detalladas en la sección inferior.
+8. **Repositorio:** Código versionado y subido a GitHub (este repositorio).
+
+---
