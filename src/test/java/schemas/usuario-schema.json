@@ -1,0 +1,7 @@
+{
+  "nome": "#string",
+  "email": "#regex ^\\S+@\\S+\\.\\S+$",
+  "password": "#string",
+  "administrador": "#string",
+  "_id": "#string"
+}
