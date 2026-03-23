@@ -9,6 +9,28 @@ Este repositorio contiene la suite de pruebas automatizadas para la API de Usuar
 
 **Historia de Usuario base:** Como administrador del sistema, quiero poder gestionar los usuarios a través de la API para administrar la base de datos de usuarios.
 
+## Estructura del Proyecto
+
+La arquitectura del proyecto sigue el principio de **Separación de Responsabilidades (SoC)**, organizada de la siguiente manera:
+
+```text
+reto-serve-rest-api-karate/
+├── src/
+│   └── test/
+│       └── java/
+│           ├── features/             # Escenarios de negocio (CRUD)
+│           │   └── usuarios.feature
+│           ├── helpers/              # Utilidades JS para datos dinámicos
+│           │   └── utils.js
+│           ├── runners/              # Ejecutor centralizado Junit 5
+│           │   └── KarateTest.java
+│           ├── schemas/              # Contratos JSON para validación
+│           │   └── usuario-schema.json
+│           ├── karate-config.js      # Configuración global y ambientes
+│           └── logback-test.xml      # Configuración de logs y reportes
+└── pom.xml                           # Gestión de dependencias Maven
+
+```
 ---
 
 ##  Instrucciones para ejecutar los Tests
@@ -53,23 +75,25 @@ Karate genera automáticamente un reporte HTML detallado de las pruebas. Al fina
 
 **`target/karate-reports/karate-summary.html`**
 
---- 
+---
+##  Estrategia de Automatización y Patrones Utilizados
 
-## Cumplimiento de Especificaciones Técnicas
+El diseño de esta suite de pruebas busca garantizar la escalabilidad y mantenibilidad del proyecto a largo plazo. Para ello, se aplicaron las siguientes estrategias y patrones de diseño:
 
-El proyecto ha sido diseñado para cumplir estrictamente con los 8 puntos solicitados en el reto:
+### Estrategia de Pruebas
+* **Validación de Contratos (Contract Testing):** Se prioriza la validación estricta de la estructura de las respuestas HTTP frente a esquemas JSON, garantizando que la API no rompa los contratos establecidos con el FrontEnd.
+* **Aislamiento de Estado (Data Independence):** Los datos de prueba se generan de forma dinámica en tiempo de ejecución (ej. emails aleatorios). El flujo CRUD culmina con la eliminación del recurso (`DELETE`), garantizando que la base de datos regrese a su estado original para evitar colisiones en futuras ejecuciones.
+* **Cobertura Positiva y Negativa:** Se separan los flujos ideales (Happy Path) de los flujos de error (Edge Cases), asegurando que el sistema maneje correctamente las excepciones y devuelva los códigos HTTP esperados.
 
-1. **Configuración (Karate DSL):** Proyecto gestionado con Maven (`pom.xml`) utilizando el framework Karate.
-2. **Feature Files:** Centralizado en `src/test/java/features/usuarios.feature` para cubrir los endpoints de usuarios.
-3. **Operaciones CRUD Completas:** * `GET /usuarios`: Implementado para listar y validar todos los usuarios.
-    * `POST /usuarios`: Implementado con generación de datos dinámicos.
-    * `GET /usuarios/{_id}`: Búsqueda dinámica utilizando el ID generado en el POST.
-    * `PUT /usuarios/{_id}`: Actualización del registro previamente creado.
-    * `DELETE /usuarios/{_id}`: Eliminación del registro para garantizar la limpieza de la base de datos.
-4. **Validación de Esquema JSON:** Se implementó `usuario-schema.json` en la carpeta `schemas/` para validar estrictamente la estructura y tipos de datos (ej. uso de Regex para emails).
-5. **Casos Positivos y Negativos:** Además del flujo ideal (CRUD), se automatizó un escenario negativo para validar la respuesta HTTP 400 al intentar registrar un email duplicado.
-6. **Helpers y Datos de Prueba:** Se desarrolló la utilidad `utils.js` en la carpeta `helpers/` para generar correos electrónicos únicos (`getRandomEmail`), evitando fallos por colisión de datos.
-7. **Instrucciones de Ejecución:** Detalladas en la sección inferior.
-8. **Repositorio:** Código versionado y subido a GitHub (este repositorio).
+### Patrones y Arquitectura
+* **BDD (Behavior-Driven Development):** Uso de la sintaxis Gherkin (`Given`, `When`, `Then`) para construir escenarios de prueba legibles, atómicos y orientados al comportamiento, funcionando como documentación viva del negocio.
+* **Separation of Concerns (SoC):** El proyecto divide las responsabilidades en módulos específicos para facilitar su mantenimiento:
+    * `features/`: Contiene los escenarios de negocio (operaciones CRUD), separando la lógica de las pruebas por dominios o recursos.
+    * `schemas/`: Centraliza los contratos JSON esperados, separando las aserciones de estructura de los pasos de la prueba.
+    * `helpers/`: Almacena funciones de soporte (`utils.js`) para la generación dinámica de datos, manteniendo los archivos Gherkin limpios de lógica compleja.
+    * `runners/`: Centraliza la ejecución de la suite de pruebas mediante JUnit 5.
+    * `karate-config.js`: Gestiona la configuración global y variables de entorno (como la `baseUrl` y `timeouts`), permitiendo que la suite escale fácilmente a entornos de QA, Staging o Producción sin modificar las pruebas.
 
 ---
+
+
