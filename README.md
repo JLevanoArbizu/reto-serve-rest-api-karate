@@ -47,7 +47,7 @@ Asegúrate de tener instalado lo siguiente en tu sistema:
 Abre tu terminal y ejecuta:
 
 ```bash
-git clone [https://github.com/TU_USUARIO/reto-serve-rest-api-karate.git](https://github.com/TU_USUARIO/reto-serve-rest-api-karate.git)
+git clone https://github.com/JLevanoArbizu/reto-serve-rest-api-karate.git
 ```
 ```bash
 cd reto-serve-rest-api-karate
